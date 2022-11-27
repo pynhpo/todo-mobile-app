@@ -1,64 +1,35 @@
-import React, {useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {View, TextField, Text, Button} from 'react-native-ui-lib';
-import auth from '@react-native-firebase/auth';
+import {RootSiblingParent} from 'react-native-root-siblings';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/lib/integration/react';
+import store, {persistor} from '@init/store';
+import {LoadingView} from '@components/loading-view.component';
+import {LoadingOverlay} from '@components/loading-overlay.component';
+import {AppNavigator} from '@navigation/app.navigator';
 
 const App = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const onLogin = useCallback(async () => {
-    try {
-      const user = await auth().signInWithEmailAndPassword(email, password);
-    } catch (err) {}
-  }, [email, password]);
-
   return (
-    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-      <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View flex paddingH-25 paddingT-120>
-            <Text blue50 text20 marginB-16>
-              Welcome
-            </Text>
-            <TextField
-              text50
-              placeholder="email"
-              grey10
-              value={email}
-              onChangeText={setEmail}
-              autoCapitalize="none"
-            />
-            <TextField
-              autoCapitalize="none"
-              text50
-              placeholder="password"
-              secureTextEntry
-              grey10
-              value={password}
-              onChangeText={setPassword}
-            />
-            <View marginT-100 center>
-              <Button
-                text70
-                white
-                background-orange30
-                label="Login"
-                onPress={onLogin}
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <RootSiblingParent>
+        <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+          <Provider store={store}>
+            <PersistGate loading={<LoadingView />} persistor={persistor}>
+              <AppNavigator />
+              <LoadingOverlay />
+            </PersistGate>
+          </Provider>
+        </GestureHandlerRootView>
+      </RootSiblingParent>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
   gestureHandlerRootView: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    flex: 1,
   },
 });
 
