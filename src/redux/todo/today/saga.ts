@@ -9,10 +9,14 @@ import {startFetching, fetchSuccessfully, fetchUnsuccessfully} from './slice';
 function* fetchTodayTodoSaga() {
   try {
     yield put(startFetching());
-
     const res: TodayTodoResponse = yield SagaService.callApi(
       'get',
-      URL.todayTodo,
+      URL.allTodo,
+      {
+        params: {
+          status: 'today',
+        },
+      },
     );
     yield put(fetchSuccessfully(res));
   } catch (err) {

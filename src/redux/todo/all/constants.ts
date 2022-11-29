@@ -9,15 +9,8 @@ export const initialAllTodoState: AllTodoStateType = {
   isFetching: true,
   data: {
     unCompletedCount: 0,
-    list: [],
+    list: {},
   },
 };
 
-export type FetchAllTodoActionPayload =
-  | {
-      title: string;
-      status: 'completed' | 'active' | 'today' | 'future' | 'overdue';
-      sortByName: 'createdDate' | 'completedDate';
-      sortByOrder: 'asc' | 'desc';
-    }
-  | undefined;
+export type FetchAllTodoActionPayload = {isResetFilter: boolean} | undefined;

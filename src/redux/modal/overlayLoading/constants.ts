@@ -8,7 +8,4 @@ export const initialOverlayLoadingModalState: OverlayLoadingModalStateType = {
   animationOut: true,
 };
 
-export type SetOverlayLoadingModalActionPayload = {
-  visible: boolean;
-  animationOut?: boolean;
-};
+export type SetOverlayLoadingModalActionPayload = OverlayLoadingModalStateType;

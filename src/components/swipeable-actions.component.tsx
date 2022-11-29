@@ -63,9 +63,7 @@ const SwipeableAction = forwardRef(
               onRecenter();
               onOpen();
             }}>
-            <Text status="default" type="tiny">
-              Open
-            </Text>
+            <Text white>Open</Text>
           </TouchableOpacity>
         ) : null,
         onEdit ? (
@@ -75,9 +73,7 @@ const SwipeableAction = forwardRef(
               onEdit();
             }}
             style={[styles.rightSwipeItem, styles.edit]}>
-            <Text status="default" type="tiny">
-              Edit
-            </Text>
+            <Text white>Edit</Text>
           </TouchableOpacity>
         ) : null,
         onDelete ? (
@@ -87,9 +83,7 @@ const SwipeableAction = forwardRef(
               onDelete();
             }}
             style={[styles.rightSwipeItem, styles.delete]}>
-            <Text status="default" type="tiny">
-              Delete
-            </Text>
+            <Text white>Delete</Text>
           </TouchableOpacity>
         ) : null,
         onHide ? (
@@ -99,9 +93,7 @@ const SwipeableAction = forwardRef(
               onHide();
             }}
             style={[styles.rightSwipeItem, styles.hide]}>
-            <Text status="default" type="tiny">
-              Hide
-            </Text>
+            <Text white>Hide</Text>
           </TouchableOpacity>
         ) : null,
       ].filter((e: any) => e !== null);

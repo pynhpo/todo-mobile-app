@@ -1,9 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useState, FC} from 'react';
 import {KeyboardAvoidingScrollView} from '@components/keyboard-avoiding-scroll-view.component';
-import {loginAction} from '@redux/auth/actions';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import {utils} from '@react-native-firebase/app';
 import map from 'lodash/map';
 import {
   Text,
@@ -15,27 +13,27 @@ import {
   Picker,
   AnimatedImage,
 } from 'react-native-ui-lib';
-import {TextInput, Platform, ActivityIndicator} from 'react-native';
+import {Platform, ActivityIndicator} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {styles} from './styles';
-import {Controller, useForm, SubmitHandler} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {loginSchema} from '@constants/validation-schema.constant';
 import {Layout} from '@components/layout.component';
-import {SearchSvg} from '@components/svg/search-svg';
-import {FilterSvg} from '@components/svg/filter-svg';
-import {GreenPlusSvg} from '@components/svg/green-plus-svg';
 import {ImageUploadSvg} from '@components/svg/image-upload-svg';
 import {colors} from '@theme/colors';
 import {NavigationService} from '@services/navigation.service';
 import {setOverlayLoadingModalState} from '@redux/modal/overlayLoading/slice';
+import {
+  addNewTodoItemAction,
+  updateTodoItemAction,
+} from '@redux/todo/item/actions';
+import {Repeat, Priority, TodoItemResponse} from '@type/api';
+import {Route} from '@type/navigation';
 
-const repeatOptions = [
+const repeatOptions: Array<{label: string; value: Repeat}> = [
   {label: 'None', value: 'none'},
   {label: 'Everyday', value: 'everyday'},
 ];
 
-const priorityOptions = [
+const priorityOptions: Array<{label: string; value: Priority}> = [
   {label: 'Normal', value: 'normal'},
   {label: 'Medium', value: 'medium'},
   {label: 'High', value: 'high'},
@@ -44,34 +42,58 @@ const priorityOptions = [
 
 const {TextField} = Incubator;
 
-type FormValues = {
-  email: string;
-  password: string;
-};
+interface DetailsScreenProps extends Route<TodoItemResponse> {}
 
-export const DetailsScreen = (): React.ReactElement => {
+export const DetailsScreen: FC<DetailsScreenProps> = (
+  props,
+): React.ReactElement => {
+  const params = props?.route?.params;
+  const isEditing = !!params?.uid;
   const dispatch = useDispatch();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [appliedDate, setAppliedDate] = useState<string>(
-    new Date().toISOString().split('T')[0],
+  const [title, setTitle] = useState(params?.title || '');
+  const [content, setContent] = useState(params?.content || '');
+  const [appliedDate, setAppliedDate] = useState<Date>(
+    params?.appliedAt ? new Date(params?.appliedAt) : new Date(),
   );
-  const [dueDate, setDueDate] = useState<Date>();
-  const [dueTime, setDueTime] = useState<Date>();
-  const [repeat, setRepeat] = useState<string>(repeatOptions[0].value);
-  const [priority, setPriority] = useState<string>(priorityOptions[0].value);
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
+  const [dueDate, setDueDate] = useState<Date | undefined>(
+    params?.dueAt ? new Date(params?.dueAt) : undefined,
+  );
+  const [dueTime, setDueTime] = useState<Date | undefined>(
+    params?.dueAt ? new Date(params?.dueAt) : undefined,
+  );
+  const [repeat, setRepeat] = useState<Repeat>(
+    params?.repeat || repeatOptions[0].value,
+  );
+  const [priority, setPriority] = useState<Priority>(
+    params?.priority || priorityOptions[0].value,
+  );
+  const [imageUrl, setImageUrl] = useState<string>(params?.imageUrl || '');
 
-  const passwordInput =
-    useRef<TextInput>() as React.MutableRefObject<TextInput>;
+  const onSave = () => {
+    if (!title) {
+      return;
+    }
+    const oneDayInMillisecond = 24 * 60 * 60 * 1000;
+    const dueAt = dueDate
+      ? Math.floor((dueDate?.getTime() || 0) / oneDayInMillisecond) *
+          oneDayInMillisecond +
+        (dueTime ? (dueTime?.getTime() || 0) % oneDayInMillisecond : 0)
+      : undefined;
 
-  const {handleSubmit, control} = useForm<FormValues>({
-    resolver: yupResolver(loginSchema),
-  });
-
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    dispatch(loginAction({email: data.email, password: data.password}));
+    const body = {
+      title,
+      content,
+      appliedAt: appliedDate?.getTime(),
+      dueAt,
+      imageUrl,
+      priority,
+      repeat,
+    };
+    dispatch(
+      isEditing
+        ? updateTodoItemAction({...body, uid: params?.uid})
+        : addNewTodoItemAction(body),
+    );
   };
 
   const onLaunchImageLibrary = async () => {
@@ -83,13 +105,11 @@ export const DetailsScreen = (): React.ReactElement => {
         quality: 0.5,
       });
       const uri = result.assets?.[0]?.uri;
-      console.log(1111111, uri);
       if (uri) {
         const filename = uri.substring(uri.lastIndexOf('/') + 1);
         const uploadUri =
           Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
         await storage().ref(filename).putFile(uploadUri);
-        console.log(999999);
         const downloadURL = await storage().ref(filename).getDownloadURL();
         setImageUrl(downloadURL);
         // setIsUploadingImage(false);
@@ -97,16 +117,15 @@ export const DetailsScreen = (): React.ReactElement => {
       }
     } catch (err) {
       dispatch(setOverlayLoadingModalState({visible: false}));
-      console.log(44444, err);
     }
   };
-  console.log(33333, utils.FilePath.PICTURES_DIRECTORY);
+
   return (
     <Layout useSafeAreaView style={styles.root}>
       <View row spread centerV marginB-16>
         <Button link label="Cancel" onPress={NavigationService.goBack} />
         <Text grey10>Details</Text>
-        <Button link label="Add" />
+        <Button link label={isEditing ? 'Save' : 'Add'} onPress={onSave} />
       </View>
       <KeyboardAvoidingScrollView>
         <View style={styles.mainContentCover} marginB-16>
@@ -136,9 +155,9 @@ export const DetailsScreen = (): React.ReactElement => {
             placeholder={'Applied date'}
             mode={'date'}
             onChange={(date: Date) => {
-              setAppliedDate(new Date(date).toISOString().split('T')[0]);
+              setAppliedDate(date);
             }}
-            value={new Date(appliedDate)}
+            value={appliedDate}
           />
           <View style={styles.gap} />
           <DateTimePicker
@@ -146,12 +165,14 @@ export const DetailsScreen = (): React.ReactElement => {
             placeholder={'Due date'}
             mode={'date'}
             onChange={(date: Date) => setDueDate(date)}
+            value={dueDate}
           />
           <DateTimePicker
             title={'Due time'}
             placeholder={'Due time'}
             mode={'time'}
             onChange={(date: Date) => setDueTime(date)}
+            value={dueTime}
           />
         </View>
 
@@ -162,7 +183,7 @@ export const DetailsScreen = (): React.ReactElement => {
           enableModalBlur
           // useWheelPicker
           value={repeat}
-          onChange={(value: string) => setRepeat(value)}
+          onChange={(value: any) => setRepeat(value)}
           // rightIconSource={dropdown}
           // containerStyle={{marginTop: 20}}
           // renderPicker={() => {
@@ -197,9 +218,8 @@ export const DetailsScreen = (): React.ReactElement => {
           enableModalBlur
           useNativePicker
           value={priority}
-          onChange={(value: string) => {
+          onChange={(value: any) => {
             setPriority(value);
-            console.log(11111, value);
           }}
           // rightIconSource={dropdown}
           // containerStyle={{marginTop: 20}}

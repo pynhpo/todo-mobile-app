@@ -118,7 +118,6 @@ export const LoadingOverlay: FC<LoadingOverlayProps> = (
   );
 };
 
-const transparent = 'transparent';
 const styles = StyleSheet.create({
   modal: {
     margin: 0,
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   container: {
-    backgroundColor: transparent,
+    backgroundColor: 'transparent',
     bottom: 0,
     flex: 1,
     left: 0,

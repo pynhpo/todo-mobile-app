@@ -14,3 +14,8 @@ export const selectTodayTodo = createSelector(
   makeSelectTodoDomain,
   todo => todo.today,
 );
+
+export const selectTodoFilter = createSelector(
+  makeSelectTodoDomain,
+  todo => todo.filter,
+);

@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
@@ -23,6 +24,8 @@
     "@reduxjs/toolkit": "^1.9.0",
     "axios": "^1.2.0",
     "lodash": "^4.17.21",
+    "patch-package": "^6.5.0",
+    "postinstall-postinstall": "^2.1.0",
     "react": "18.1.0",
     "react-hook-form": "^7.39.6",
     "react-native": "0.70.6",
@@ -36,7 +39,7 @@
     "react-native-screens": "^3.18.2",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-svg": "^13.6.0",
-    "react-native-swipeable": "^0.6.0",
+    "react-native-swipeable": "0.6.0",
     "react-native-ui-lib": "^6.24.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",

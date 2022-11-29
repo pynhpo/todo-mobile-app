@@ -23,7 +23,10 @@ function* addNewTodoItemSaga({
     yield SagaService.callApi('post', URL.addTodoItem, {
       data: payload,
     });
-    yield all([put(fetchAllTodoAction()), put(fetchTodayTodoAction())]);
+    yield all([
+      put(fetchAllTodoAction({isResetFilter: true})),
+      put(fetchTodayTodoAction()),
+    ]);
     yield put(setOverlayLoadingModalState({visible: false}));
     yield NavigationService.goBack();
   } catch (err) {

@@ -7,10 +7,10 @@ import {ListSvg} from '@components/svg/list-svg';
 import {ProfileSvg} from '@components/svg/profile-svg';
 import {SCREEN_NAME} from '@constants/navigation.constant';
 import {AllScreen} from '@screens/all';
+import {TodayScreen} from '@screens/today';
+import {ProfileScreen} from '@screens/profile';
 
 const BottomTab = createBottomTabNavigator();
-
-const EmptyComponent = () => <View />;
 
 export const MainTabNavigator = (): React.ReactElement => {
   return (
@@ -27,7 +27,7 @@ export const MainTabNavigator = (): React.ReactElement => {
       />
       <BottomTab.Screen
         name={SCREEN_NAME.today}
-        component={EmptyComponent}
+        component={TodayScreen}
         options={{
           title: 'Today',
           tabBarIcon: ({color}: {color: string}) => <FocusSvg fill={color} />,
@@ -35,7 +35,7 @@ export const MainTabNavigator = (): React.ReactElement => {
       />
       <BottomTab.Screen
         name={SCREEN_NAME.profile}
-        component={EmptyComponent}
+        component={ProfileScreen}
         options={{
           title: 'Profile',
           tabBarIcon: ({color}: {color: string}) => <ProfileSvg fill={color} />,

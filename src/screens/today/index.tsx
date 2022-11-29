@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {KeyboardAvoidingScrollView} from '@components/keyboard-avoiding-scroll-view.component';
 import {
   Text,
-  View,
   Incubator,
   TouchableOpacity,
   ListItem,
@@ -10,61 +9,28 @@ import {
   Checkbox,
 } from 'react-native-ui-lib';
 import {SectionList} from 'react-native';
-import debounce from 'lodash/debounce';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './styles';
 import {Layout} from '@components/layout.component';
-import {SearchSvg} from '@components/svg/search-svg';
-import {FilterSvg} from '@components/svg/filter-svg';
 import {GreenPlusSvg} from '@components/svg/green-plus-svg';
-import {colors} from '@theme/colors';
 import {NavigationService} from '@services/navigation.service';
 import {SCREEN_NAME} from '@constants/navigation.constant';
-import {fetchAllTodoAction} from '@redux/todo/all/actions';
+import {fetchTodayTodoAction} from '@redux/todo/today/actions';
 import {
   markTodoItemAsCompletedAction,
   deleteTodoItemAction,
 } from '@redux/todo/item/actions';
-import {setTitleOfTodoFilterState} from '@redux/todo/filter/slice';
-import {selectAllTodo, selectTodoFilter} from '@redux/todo/selectors';
+import {selectTodayTodo} from '@redux/todo/selectors';
 import {TodoItemResponse} from '@type/api';
 import SwipeableAction from '@components/swipeable-actions.component';
 
-import {Filter} from './components/Filter';
-
-const {TextField} = Incubator;
-
-export const AllScreen = (): React.ReactElement => {
-  const allTodo = useSelector(selectAllTodo);
-  const filter = useSelector(selectTodoFilter);
+export const TodayScreen = (): React.ReactElement => {
+  const todayTodo = useSelector(selectTodayTodo);
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState('');
-  const [isFilterVisible, setFilterVisible] = useState(false);
-
-  const showFilter = () => {
-    setFilterVisible(true);
-  };
-
-  const hideFilter = () => {
-    setFilterVisible(false);
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onSearchByTitle = useCallback(
-    debounce((text: string) => {
-      dispatch(setTitleOfTodoFilterState({title: text}));
-    }, 400),
-    [],
-  );
-
-  const onChangeSearchText = (text: string) => {
-    setSearchText(text);
-    onSearchByTitle(text);
-  };
 
   useEffect(() => {
-    dispatch(fetchAllTodoAction());
-  }, [dispatch, filter]);
+    dispatch(fetchTodayTodoAction());
+  }, [dispatch]);
 
   const data = useMemo<
     Array<{
@@ -72,39 +38,17 @@ export const AllScreen = (): React.ReactElement => {
       data: TodoItemResponse[];
     }>
   >(() => {
-    return Object.keys(allTodo.data.list).map(key => ({
+    return Object.keys(todayTodo.data.list).map(key => ({
       title: new Date(Number(key)).toLocaleDateString(),
-      data: allTodo.data.list[key],
+      data: todayTodo.data.list[key],
     }));
-  }, [allTodo]);
+  }, [todayTodo]);
   const updateItem = (item: TodoItemResponse) => {
     NavigationService.navigate(SCREEN_NAME.details, item);
   };
   return (
     <Layout style={styles.root}>
       <KeyboardAvoidingScrollView>
-        <View row center>
-          <TextField
-            returnKeyType={'search'}
-            placeholder="search title"
-            grey10
-            value={searchText}
-            onChangeText={onChangeSearchText}
-            autoCapitalize="none"
-            leadingAccessory={
-              <SearchSvg width={18} height={18} style={styles.searchIcon} />
-            }
-            containerStyle={styles.searchInput}
-          />
-          <TouchableOpacity onPress={showFilter}>
-            <FilterSvg
-              width={18}
-              height={18}
-              fill={colors.gray}
-              style={styles.filterIcon}
-            />
-          </TouchableOpacity>
-        </View>
         <SectionList
           contentContainerStyle={{flex: 1}}
           sections={data}
@@ -168,7 +112,7 @@ export const AllScreen = (): React.ReactElement => {
               </ListItem>
             </SwipeableAction>
           )}
-          renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
+          renderSectionHeader={({section: {title}}) => <Text></Text>}
         />
       </KeyboardAvoidingScrollView>
       <TouchableOpacity
@@ -178,7 +122,6 @@ export const AllScreen = (): React.ReactElement => {
         }}>
         <GreenPlusSvg width={48} height={48} />
       </TouchableOpacity>
-      <Filter isVisible={isFilterVisible} onHide={hideFilter} />
     </Layout>
   );
 };
