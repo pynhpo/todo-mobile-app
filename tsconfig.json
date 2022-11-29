@@ -24,7 +24,8 @@
       "@navigation/*": ["src/navigation/*"],
       "@redux/*": ["src/redux/*"],
       "@constants/*": ["src/constants/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@type/*": ["src/type/*"]
     }
   },
   "exclude": [

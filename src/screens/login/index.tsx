@@ -52,6 +52,7 @@ export const LoginScreen = (): React.ReactElement => {
                 validate={() => fieldState?.error}
                 validationMessage={fieldState?.error?.message}
                 autoCapitalize="none"
+                enableErrors
               />
             )}
             name="email"
@@ -71,6 +72,7 @@ export const LoginScreen = (): React.ReactElement => {
                 onSubmitEditing={handleSubmit(onSubmit)}
                 validate={() => fieldState?.error}
                 validationMessage={fieldState?.error?.message}
+                enableErrors
               />
             )}
             name="password"

@@ -12,11 +12,6 @@ export const MainBottomNavigation = ({
 }: BottomTabBarProps): React.ReactElement => {
   const onPress = useCallback(
     (route: BottomTabBarProps['state']['routes'][0], isFocused: boolean) => {
-      // Prevent access other screens but DebitCard
-      if (route.name !== 'DebitCard') {
-        return;
-      }
-
       const event = navigation.emit({
         type: 'tabPress',
         target: route.key,
