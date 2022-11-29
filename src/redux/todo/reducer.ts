@@ -1,6 +1,8 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import {userReducer} from './user/slice';
+import {allTodoReducer} from './all/slice';
+import {todayTodoReducer} from './today/slice';
 
 export default combineReducers({
-  user: userReducer,
+  all: allTodoReducer,
+  today: todayTodoReducer,
 });

@@ -1,14 +1,12 @@
-import {initialUserState, UserStateType} from './user/constants';
+import {initialAllTodoState, AllTodoStateType} from './all/constants';
+import {initialTodayTodoState, TodayTodoStateType} from './today/constants';
 
-export type AuthStateType = {
-  user: UserStateType;
+export type TodoStateType = {
+  all: AllTodoStateType;
+  today: TodayTodoStateType;
 };
 
-export const initialAuthState: AuthStateType = {
-  user: initialUserState,
-};
-
-export type LoginActionPayload = {
-  email: string;
-  password: string;
+export const initialTodoState: TodoStateType = {
+  all: initialAllTodoState,
+  today: initialTodayTodoState,
 };

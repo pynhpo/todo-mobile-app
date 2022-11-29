@@ -1,16 +1,16 @@
 import {CombinedStateType} from '@init/reducer';
 import {createSelector} from 'reselect';
-import {AuthStateType, initialAuthState} from './constants';
+import {TodoStateType, initialTodoState} from './constants';
 
-export const makeSelectAuthDomain = (state: CombinedStateType): AuthStateType =>
-  state.auth || initialAuthState;
+export const makeSelectTodoDomain = (state: CombinedStateType): TodoStateType =>
+  state.todo || initialTodoState;
 
-export const selectUser = createSelector(
-  makeSelectAuthDomain,
-  auth => auth.user,
+export const selectAllTodo = createSelector(
+  makeSelectTodoDomain,
+  todo => todo.all,
 );
 
-export const selectUserEmail = createSelector(
-  makeSelectAuthDomain,
-  auth => auth.user.email,
+export const selectTodayTodo = createSelector(
+  makeSelectTodoDomain,
+  todo => todo.today,
 );
