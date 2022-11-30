@@ -1,10 +1,8 @@
-import {TodoItemRequest} from '@type/api';
+import {TodoItemRequest, TodoItemResponse} from '@type/api';
 
 export type AddNewTodoItemActionPayload = TodoItemRequest;
 
-export interface UpdateTodoItemActionPayload extends TodoItemRequest {
-  uid: string;
-}
+export interface UpdateTodoItemActionPayload extends TodoItemResponse {}
 
 export type DeleteTodoItemActionPayload = {
   uid: string;

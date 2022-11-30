@@ -24,15 +24,15 @@ function* addNewTodoItemSaga({
       data: payload,
     });
     yield all([
-      put(fetchAllTodoAction({isResetFilter: true})),
-      put(fetchTodayTodoAction()),
+      put(fetchAllTodoAction({isResetFilter: true, withoutLoading: true})),
+      put(fetchTodayTodoAction({withoutLoading: true})),
     ]);
-    yield put(setOverlayLoadingModalState({visible: false}));
     yield NavigationService.goBack();
   } catch (err) {
-    yield put(setOverlayLoadingModalState({visible: false}));
     ToastMessageService.toastError('Please try again!');
     CrashlyticsService.recordError(err);
+  } finally {
+    yield put(setOverlayLoadingModalState({visible: false}));
   }
 }
 
@@ -44,13 +44,16 @@ function* updateTodoItemSaga({
     yield SagaService.callApi('put', URL.updateTodoItem, {
       data: payload,
     });
-    yield all([put(fetchAllTodoAction()), put(fetchTodayTodoAction())]);
-    yield put(setOverlayLoadingModalState({visible: false}));
+    yield all([
+      put(fetchAllTodoAction({withoutLoading: true})),
+      put(fetchTodayTodoAction({withoutLoading: true})),
+    ]);
     yield NavigationService.goBack();
   } catch (err) {
-    yield put(setOverlayLoadingModalState({visible: false}));
     ToastMessageService.toastError('Please try again!');
     CrashlyticsService.recordError(err);
+  } finally {
+    yield put(setOverlayLoadingModalState({visible: false}));
   }
 }
 
@@ -58,15 +61,15 @@ function* deleteTodoItemSaga({
   payload,
 }: ReturnType<typeof deleteTodoItemAction>) {
   try {
-    yield put(setOverlayLoadingModalState({visible: true}));
     yield SagaService.callApi(
       'delete',
       `${URL.deleteTodoItem}/${payload?.uid}`,
     );
-    yield all([put(fetchAllTodoAction()), put(fetchTodayTodoAction())]);
-    yield put(setOverlayLoadingModalState({visible: false}));
+    yield all([
+      put(fetchAllTodoAction({withoutLoading: true})),
+      put(fetchTodayTodoAction({withoutLoading: true})),
+    ]);
   } catch (err) {
-    yield put(setOverlayLoadingModalState({visible: false}));
     ToastMessageService.toastError('Please try again!');
     CrashlyticsService.recordError(err);
   }
@@ -79,7 +82,10 @@ function* markTodoItemAsCompletedSaga({
     yield SagaService.callApi('patch', URL.markTodoItemAsCompleted, {
       data: payload,
     });
-    yield all([put(fetchAllTodoAction()), put(fetchTodayTodoAction())]);
+    yield all([
+      put(fetchAllTodoAction({withoutLoading: true})),
+      put(fetchTodayTodoAction({withoutLoading: true})),
+    ]);
   } catch (err) {
     CrashlyticsService.recordError(err);
   }

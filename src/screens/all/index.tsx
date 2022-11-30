@@ -137,6 +137,7 @@ export const AllScreen = (): React.ReactElement => {
             onRefresh={onRefresh}
           />
         }
+        showsVerticalScrollIndicator={false}
       />
       <TouchableOpacity
         style={styles.bluePlusIconCover}

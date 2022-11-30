@@ -6,9 +6,13 @@ import {TodayTodoResponse} from '@type/api';
 import {fetchTodayTodoAction} from './actions';
 import {startFetching, fetchSuccessfully, fetchUnsuccessfully} from './slice';
 
-function* fetchTodayTodoSaga() {
+function* fetchTodayTodoSaga({
+  payload,
+}: ReturnType<typeof fetchTodayTodoAction>) {
   try {
-    yield put(startFetching());
+    if (!payload?.withoutLoading) {
+      yield put(startFetching());
+    }
     const res: TodayTodoResponse = yield SagaService.callApi(
       'get',
       URL.allTodo,

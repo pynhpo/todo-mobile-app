@@ -28,6 +28,7 @@ import {
 import {Repeat, Priority, TodoItemResponse} from '@type/api';
 import {Route} from '@type/navigation';
 import {GapLine} from '@components/gap-line.component';
+import {CrashlyticsService} from '@services/crashlytics.service';
 
 const repeatOptions: Array<{label: string; value: Repeat}> = [
   {label: 'None', value: 'none'},
@@ -49,27 +50,34 @@ interface DetailsScreenProps
 export const DetailsScreen: FC<DetailsScreenProps> = (
   props,
 ): React.ReactElement => {
-  const params = props?.route?.params;
-  const isEditing = !!params?.uid;
+  const params = props?.route?.params || {};
+  const {isToday, ...todoItemData} = params;
+  const isEditing = !!todoItemData?.uid;
   const dispatch = useDispatch();
-  const [title, setTitle] = useState(params?.title || '');
-  const [content, setContent] = useState(params?.content || '');
+  const [title, setTitle] = useState(todoItemData?.title || '');
+  const [content, setContent] = useState(todoItemData?.content || '');
   const [appliedDate, setAppliedDate] = useState<Date>(
-    params?.appliedAt ? new Date(params?.appliedAt) : new Date(),
+    todoItemData?.appliedAt ? new Date(todoItemData?.appliedAt) : new Date(),
   );
   const [dueDate, setDueDate] = useState<Date | undefined>(
-    params?.dueAt ? new Date(params?.dueAt) : undefined,
+    todoItemData?.dueAt ? new Date(todoItemData?.dueAt) : undefined,
   );
   const [dueTime, setDueTime] = useState<Date | undefined>(
-    params?.dueAt ? new Date(params?.dueAt) : undefined,
+    todoItemData?.dueAt ? new Date(todoItemData?.dueAt) : undefined,
   );
-  const [repeat, setRepeat] = useState<Repeat>(
-    params?.repeat || repeatOptions[0].value,
+  const [repeat, setRepeat] = useState<{label: string; value: Repeat}>(
+    todoItemData?.repeat
+      ? {value: todoItemData?.repeat, label: todoItemData?.repeat}
+      : repeatOptions[0],
   );
-  const [priority, setPriority] = useState<Priority>(
-    params?.priority || priorityOptions[0].value,
+  const [priority, setPriority] = useState<{label: string; value: Priority}>(
+    todoItemData?.priority
+      ? {value: todoItemData?.priority, label: todoItemData?.priority}
+      : priorityOptions[0],
   );
-  const [imageUrl, setImageUrl] = useState<string>(params?.imageUrl || '');
+  const [imageUrl, setImageUrl] = useState<string>(
+    todoItemData?.imageUrl || '',
+  );
 
   const onSave = () => {
     if (!title) {
@@ -88,25 +96,25 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
       appliedAt: appliedDate?.getTime(),
       dueAt,
       imageUrl,
-      priority,
-      repeat,
+      priority: priority?.value,
+      repeat: repeat?.value,
     };
     dispatch(
       isEditing
-        ? updateTodoItemAction({...body, uid: params?.uid})
+        ? updateTodoItemAction({...todoItemData, ...body})
         : addNewTodoItemAction(body),
     );
   };
 
   const onLaunchImageLibrary = async () => {
     try {
-      dispatch(setOverlayLoadingModalState({visible: true}));
       const result = await launchImageLibrary({
         mediaType: 'photo',
         quality: 0.5,
       });
       const uri = result.assets?.[0]?.uri;
       if (uri) {
+        dispatch(setOverlayLoadingModalState({visible: true}));
         const filename = uri.substring(uri.lastIndexOf('/') + 1);
         const uploadUri =
           Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -117,6 +125,7 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
       }
     } catch (err) {
       dispatch(setOverlayLoadingModalState({visible: false}));
+      CrashlyticsService.recordError(err);
     }
   };
 
@@ -195,7 +204,7 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
           />
         </View>
         <View style={styles.dateCover}>
-          {!params?.isToday ? (
+          {!isToday ? (
             <DateTimePicker
               grey10
               text-90
@@ -238,9 +247,7 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
           <Picker
             title="Repeat"
             placeholder="Pick a item"
-            useNativePicker
-            enableModalBlur
-            value={repeat}
+            value={repeat?.value}
             onChange={(value: any) => setRepeat(value)}>
             {map(repeatOptions, option => (
               <Picker.Item
@@ -254,9 +261,7 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
           <Picker
             title="Priority"
             placeholder="Pick a item"
-            enableModalBlur
-            useNativePicker
-            value={priority}
+            value={priority?.value}
             onChange={(value: any) => {
               setPriority(value);
             }}>

@@ -47,6 +47,7 @@ export const TodayScreen = (): React.ReactElement => {
             onRefresh={onRefresh}
           />
         }
+        showsVerticalScrollIndicator={false}
       />
       <TouchableOpacity
         style={styles.bluePlusIconCover}

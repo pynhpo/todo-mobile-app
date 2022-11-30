@@ -5,7 +5,7 @@ export type OverlayLoadingModalStateType = {
 
 export const initialOverlayLoadingModalState: OverlayLoadingModalStateType = {
   visible: false,
-  animationOut: true,
+  animationOut: false,
 };
 
 export type SetOverlayLoadingModalActionPayload = OverlayLoadingModalStateType;

@@ -32,12 +32,6 @@ ThemeManager.setComponentTheme('Button', (props: ButtonProps) => {
   };
 });
 
-ThemeManager.setComponentTheme('Checkbox', () => {
-  return {
-    color: Colors.blue50,
-  };
-});
-
 ThemeManager.setComponentTheme('TouchableOpacity', () => {
   return {
     hitSlop: {bottom: 10, left: 10, right: 10, top: 10},

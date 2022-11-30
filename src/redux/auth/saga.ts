@@ -44,12 +44,12 @@ function* loginSaga({payload}: ReturnType<typeof loginAction>) {
         email: res?.user?.email,
       }),
     );
-    yield put(setOverlayLoadingModalState({visible: false}));
     yield call(NavigationService.reset, SCREEN_NAME.mainTab);
   } catch (err) {
-    yield put(setOverlayLoadingModalState({visible: false}));
     ToastMessageService.toastWarning('Please try again!');
     CrashlyticsService.recordError(err);
+  } finally {
+    yield put(setOverlayLoadingModalState({visible: false}));
   }
 }
 export function* authSaga() {

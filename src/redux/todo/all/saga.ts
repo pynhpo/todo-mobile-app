@@ -11,7 +11,9 @@ import {setTodoFilterState} from '../filter/slice';
 
 function* fetchAllTodoSaga({payload}: ReturnType<typeof fetchAllTodoAction>) {
   try {
-    yield put(startFetching());
+    if (!payload?.withoutLoading) {
+      yield put(startFetching());
+    }
     const filter: TodoFilterStateType = yield select(selectTodoFilter);
     const res: AllTodoResponse = yield SagaService.callApi('get', URL.allTodo, {
       params: payload?.isResetFilter ? initialTodoFilterState : filter,

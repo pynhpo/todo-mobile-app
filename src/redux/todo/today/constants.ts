@@ -9,8 +9,10 @@ export const initialTodayTodoState: TodayTodoStateType = {
   isFetching: true,
   data: {
     unCompletedCount: 0,
-    list: [],
+    list: {},
   },
 };
 
-export type FetchTodayTodoActionPayload = void;
+export type FetchTodayTodoActionPayload =
+  | {withoutLoading?: boolean}
+  | undefined;

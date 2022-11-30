@@ -13,4 +13,6 @@ export const initialAllTodoState: AllTodoStateType = {
   },
 };
 
-export type FetchAllTodoActionPayload = {isResetFilter: boolean} | undefined;
+export type FetchAllTodoActionPayload =
+  | {isResetFilter?: boolean; withoutLoading?: boolean}
+  | undefined;

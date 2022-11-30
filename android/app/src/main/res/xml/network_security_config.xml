@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+    <!-- Without localhost setting, it's unable to connect metro with app. -->
+      <domain includeSubdomains="true">127.0.0.1</domain>
+      <!-- For physical phone, 194.233.71.230 is the address connect to computer -->
+      <domain includeSubdomains="true">194.233.71.230</domain>
+      <!-- For AVD, 10.0.2.2 is the address connect to computer -->
+      <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
+  </network-security-config>

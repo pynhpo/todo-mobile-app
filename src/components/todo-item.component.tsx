@@ -1,12 +1,6 @@
 import React, {useMemo, FC} from 'react';
 import {StyleSheet} from 'react-native';
-import {
-  Text,
-  ListItem,
-  ListItemProps,
-  Colors,
-  Checkbox,
-} from 'react-native-ui-lib';
+import {Text, ListItem, ListItemProps, Colors} from 'react-native-ui-lib';
 import SwipeableAction from '@components/swipeable-actions.component';
 import {NavigationService} from '@services/navigation.service';
 import {SCREEN_NAME} from '@constants/navigation.constant';
@@ -16,7 +10,7 @@ import {
   markTodoItemAsCompletedAction,
   deleteTodoItemAction,
 } from '@redux/todo/item/actions';
-
+import {Checkbox} from '@components/checkbox.component';
 interface TodoItemProps extends ListItemProps {
   item: TodoItemResponse;
 }
@@ -59,7 +53,6 @@ export const TodoItem: FC<TodoItemProps> = (props): React.ReactElement => {
         style={customStyle}
         activeBackgroundColor={Colors.grey60}
         activeOpacity={0.3}
-        // height={77.5}
         onPress={() => {
           updateItem(item);
         }}
@@ -67,11 +60,11 @@ export const TodoItem: FC<TodoItemProps> = (props): React.ReactElement => {
         <ListItem.Part left marginR-8>
           <Checkbox
             value={item.completed}
-            onValueChange={() => {
+            onChange={value => {
               dispatch(
                 markTodoItemAsCompletedAction({
                   uid: item?.uid,
-                  completed: !item.completed,
+                  completed: value,
                 }),
               );
             }}
