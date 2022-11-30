@@ -1,0 +1,624 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+      "top",
+    ]
+  }
+  style={
+    Array [
+      Object {
+        "backgroundColor": undefined,
+      },
+      Object {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      bounces={false}
+      contentContainerStyle={Object {}}
+      keyboardShouldPersistTaps="handled"
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View>
+        <View
+          paddingH-25={true}
+          paddingT-100={true}
+          style={
+            Array [
+              undefined,
+              undefined,
+              Object {
+                "flex": 1,
+              },
+              undefined,
+              Object {
+                "paddingHorizontal": 25,
+                "paddingTop": 100,
+              },
+              Object {},
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            blue50={true}
+            marginB-16={true}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                },
+                Object {
+                  "fontFamily": "System",
+                  "fontSize": 48,
+                  "fontWeight": "400",
+                  "lineHeight": 60,
+                },
+                Object {
+                  "color": "#81B4FF",
+                },
+                undefined,
+                undefined,
+                Object {
+                  "marginBottom": 16,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text20={true}
+          >
+            Welcome
+          </Text>
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            <Text
+              color="#20303C"
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "textAlign": "left",
+                  },
+                  undefined,
+                  Object {
+                    "color": "#20303C",
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "minHeight": 20,
+                    },
+                    undefined,
+                    Object {
+                      "opacity": 0,
+                    },
+                  ],
+                ]
+              }
+              testID="undefined.label"
+            />
+            <View
+              centerV={true}
+              row={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Array [
+                    Object {},
+                    Array [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+            >
+              <View
+                flexG={true}
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    Object {
+                      "flexGrow": 1,
+                    },
+                    undefined,
+                    Object {},
+                    Object {},
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  absF={true}
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      Object {},
+                      Object {},
+                      Object {},
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    animated={true}
+                    collapsable={false}
+                    color="#A6ACB1"
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "color": "#A6ACB1",
+                        "fontFamily": "System",
+                        "fontSize": 20,
+                        "fontWeight": "800",
+                        "textAlign": "left",
+                        "transform": Array [
+                          Object {
+                            "scale": 0.875,
+                          },
+                          Object {
+                            "translateX": 0,
+                          },
+                          Object {
+                            "translateY": 0,
+                          },
+                        ],
+                      }
+                    }
+                    testID="undefined.floatingPlaceholder"
+                  >
+                    email
+                  </Text>
+                </View>
+                <TextInput
+                  accessibilityState={
+                    Object {
+                      "disabled": false,
+                    }
+                  }
+                  autoCapitalize="none"
+                  grey20={true}
+                  isValid={true}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onSubmitEditing={[Function]}
+                  placeholder="email"
+                  placeholderTextColor="transparent"
+                  returnKeyType="next"
+                  style={
+                    Array [
+                      Object {
+                        "flexGrow": 1,
+                        "paddingBottom": 0,
+                        "paddingTop": 0,
+                        "textAlign": "left",
+                      },
+                      Object {
+                        "color": "#20303C",
+                      },
+                      Array [
+                        Object {
+                          "fontFamily": "System",
+                          "fontSize": 20,
+                          "fontWeight": "800",
+                        },
+                        Object {
+                          "color": "#4D5963",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                  text60={true}
+                  underlineColorAndroid="transparent"
+                  value="username_1@todo.com"
+                />
+              </View>
+            </View>
+            <View
+              row={true}
+              spread={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "textAlign": "left",
+                    },
+                    undefined,
+                    Object {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "minHeight": 20,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+          </View>
+          <View
+            marginB-20={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {
+                  "marginBottom": 20,
+                },
+                Object {},
+                Array [
+                  Object {
+                    "backgroundColor": undefined,
+                    "height": 1,
+                    "width": "100%",
+                  },
+                  undefined,
+                ],
+              ]
+            }
+          />
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            <View
+              centerV={true}
+              row={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Array [
+                    Object {},
+                    Array [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+            >
+              <View
+                flexG={true}
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    Object {
+                      "flexGrow": 1,
+                    },
+                    undefined,
+                    Object {},
+                    Object {},
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                <TextInput
+                  accessibilityState={
+                    Object {
+                      "disabled": false,
+                    }
+                  }
+                  autoCapitalize="none"
+                  grey20={true}
+                  isValid={true}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onSubmitEditing={[Function]}
+                  placeholder="password"
+                  secureTextEntry={true}
+                  style={
+                    Array [
+                      Object {
+                        "flexGrow": 1,
+                        "paddingBottom": 0,
+                        "paddingTop": 0,
+                        "textAlign": "left",
+                      },
+                      Object {
+                        "color": "#20303C",
+                      },
+                      Array [
+                        Object {
+                          "fontFamily": "System",
+                          "fontSize": 20,
+                          "fontWeight": "800",
+                        },
+                        Object {
+                          "color": "#4D5963",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                  text60={true}
+                  underlineColorAndroid="transparent"
+                  value="123456"
+                />
+              </View>
+            </View>
+            <View
+              row={true}
+              spread={true}
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {},
+                  Object {},
+                  Object {
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "textAlign": "left",
+                    },
+                    undefined,
+                    Object {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "minHeight": 20,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+          </View>
+          <View
+            center={true}
+            marginT-68={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {},
+                Object {
+                  "marginTop": 68,
+                },
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessibilityRole="button"
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onLayout={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 999,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "minWidth": 90,
+                  "opacity": 1,
+                  "paddingHorizontal": 20,
+                  "paddingVertical": 9.5,
+                }
+              }
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "textAlign": "left",
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "flex": 0,
+                        "flexDirection": "row",
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "lineHeight": 24,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "lineHeight": 24,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="undefined.label"
+              >
+                Login
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RNCSafeAreaView>
+`;
