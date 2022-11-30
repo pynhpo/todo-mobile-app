@@ -1,14 +1,14 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme/colors';
-import {Colors, BorderRadiuses} from 'react-native-ui-lib';
+import {Colors} from 'react-native-ui-lib';
 
 export const styles = StyleSheet.create({
   root: {
     flex: 1,
     padding: 16,
+    paddingBottom: 0,
   },
   searchInput: {
-    backgroundColor: colors.layoutLevel2,
+    backgroundColor: Colors.layoutLevel2,
     borderRadius: 8,
     padding: 8,
     flex: 1,
@@ -16,24 +16,19 @@ export const styles = StyleSheet.create({
   searchIcon: {
     marginRight: 4,
   },
+  filterIconCover: {
+    position: 'relative',
+  },
   filterIcon: {
     marginLeft: 8,
   },
-  greenPlusIconCover: {
+  bluePlusIconCover: {
     position: 'absolute',
     bottom: 32,
     right: 32,
   },
-
-  // draft
-  image: {
-    width: 54,
-    height: 54,
-    borderRadius: BorderRadiuses.br20,
-    marginHorizontal: 14,
-  },
-  border: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.grey70,
+  sectionHeader: {
+    marginBottom: -16,
+    backgroundColor: Colors.layoutLevel1,
   },
 });

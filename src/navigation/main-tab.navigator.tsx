@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainBottomNavigation} from '@components/main-bottom-navigation.component';
 import {FocusSvg} from '@components/svg/focus-svg';
@@ -21,7 +20,7 @@ export const MainTabNavigator = (): React.ReactElement => {
         name={SCREEN_NAME.all}
         component={AllScreen}
         options={{
-          title: 'All',
+          title: 'All tasks',
           tabBarIcon: ({color}: {color: string}) => <ListSvg fill={color} />,
         }}
       />
@@ -29,7 +28,7 @@ export const MainTabNavigator = (): React.ReactElement => {
         name={SCREEN_NAME.today}
         component={TodayScreen}
         options={{
-          title: 'Today',
+          title: 'Today tasks',
           tabBarIcon: ({color}: {color: string}) => <FocusSvg fill={color} />,
         }}
       />

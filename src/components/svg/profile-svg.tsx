@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
 export const ProfileSvg = (props: SvgProps): React.ReactElement => {
-  const {fill = '#ddd', width = 24, height = 24} = props;
+  const {fill = '#ddd', width = 20, height = 20} = props;
   return (
     <Svg
       width={width}

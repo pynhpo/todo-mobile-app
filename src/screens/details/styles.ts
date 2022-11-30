@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme/colors';
+import {Colors} from 'react-native-ui-lib';
 
 export const styles = StyleSheet.create({
   root: {
@@ -7,50 +7,58 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   mainContentCover: {
-    backgroundColor: colors.layoutLevel2,
+    backgroundColor: Colors.layoutLevel2,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingBottom: 16,
     flex: 1,
+    marginBottom: 16,
   },
   dateCover: {
-    backgroundColor: colors.layoutLevel2,
+    backgroundColor: Colors.layoutLevel2,
     borderRadius: 8,
     padding: 16,
+    paddingBottom: 0,
     flex: 1,
+    marginBottom: 16,
   },
-  gap: {
-    width: '100%',
-    height: 1,
-    backgroundColor: colors.lightGray,
-    marginTop: 8,
+  repeatCover: {
+    backgroundColor: Colors.layoutLevel2,
+    borderRadius: 8,
+    padding: 16,
+    paddingBottom: 0,
+    flex: 1,
+    marginBottom: 16,
   },
   imageUploadPlaceholder: {
     borderWidth: 1,
-    borderColor: colors.lightGray,
+    borderColor: Colors.lightGray,
     borderStyle: 'dashed',
     borderRadius: 1,
     flex: 1,
-    height: 160,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  searchInput: {
-    backgroundColor: colors.layoutLevel2,
+  animatedImage: {
+    resizeMode: 'contain',
+    height: 200,
+  },
+  animatedImageContainer: {
+    backgroundColor: Colors.layoutLevel2,
     borderRadius: 8,
-    padding: 8,
-    flex: 1,
   },
-  searchIcon: {
-    marginRight: 4,
+  relative: {
+    position: 'relative',
   },
-  filterIcon: {
-    marginLeft: 8,
-  },
-  greenPlusIconCover: {
+  resetIconOfImage: {
     position: 'absolute',
-    bottom: 32,
-    right: 32,
+    top: -8,
+    right: 0,
+  },
+  resetIconOfDueDate: {
+    position: 'absolute',
+    top: 26,
+    right: 0,
   },
 });

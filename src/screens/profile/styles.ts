@@ -1,7 +1,10 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  safeArea: {
+  root: {
     flex: 1,
+  },
+  arrowIcon: {
+    transform: [{rotate: '90deg'}],
   },
 });

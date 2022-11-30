@@ -63,7 +63,6 @@ export const Filter: FC<FilterProps> = ({
               key={status}
               size="small"
               style={styles.button}
-              backgroundColor={Colors.$backgroundSuccessHeavy}
               label={status}
               outline={filter.status !== status}
               onPress={onChangeStatus(status)}
@@ -82,13 +81,12 @@ export const Filter: FC<FilterProps> = ({
               key={name}
               size="small"
               style={styles.button}
-              backgroundColor={Colors.$backgroundSuccessHeavy}
-              iconSource={(props: any) =>
+              iconSource={() =>
                 filter.sortByName === name ? (
                   filter.sortByOrder === 'desc' ? (
-                    <ArrowDownSvg width={18} height={18} {...props} />
+                    <ArrowDownSvg width={18} height={18} fill={Colors.white} />
                   ) : (
-                    <ArrowUpSvg width={18} height={18} {...props} />
+                    <ArrowUpSvg width={18} height={18} fill={Colors.white} />
                   )
                 ) : undefined
               }

@@ -1,4 +1,4 @@
-import React, {useState, FC} from 'react';
+import React, {useState, FC, useCallback} from 'react';
 import {KeyboardAvoidingScrollView} from '@components/keyboard-avoiding-scroll-view.component';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
@@ -12,13 +12,13 @@ import {
   DateTimePicker,
   Picker,
   AnimatedImage,
+  Colors,
 } from 'react-native-ui-lib';
-import {Platform, ActivityIndicator} from 'react-native';
+import {Platform, ActivityIndicator, ViewStyle} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {styles} from './styles';
 import {Layout} from '@components/layout.component';
 import {ImageUploadSvg} from '@components/svg/image-upload-svg';
-import {colors} from '@theme/colors';
 import {NavigationService} from '@services/navigation.service';
 import {setOverlayLoadingModalState} from '@redux/modal/overlayLoading/slice';
 import {
@@ -27,6 +27,7 @@ import {
 } from '@redux/todo/item/actions';
 import {Repeat, Priority, TodoItemResponse} from '@type/api';
 import {Route} from '@type/navigation';
+import {GapLine} from '@components/gap-line.component';
 
 const repeatOptions: Array<{label: string; value: Repeat}> = [
   {label: 'None', value: 'none'},
@@ -42,7 +43,8 @@ const priorityOptions: Array<{label: string; value: Priority}> = [
 
 const {TextField} = Incubator;
 
-interface DetailsScreenProps extends Route<TodoItemResponse> {}
+interface DetailsScreenProps
+  extends Route<TodoItemResponse & {isToday?: boolean}> {}
 
 export const DetailsScreen: FC<DetailsScreenProps> = (
   props,
@@ -98,7 +100,6 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
 
   const onLaunchImageLibrary = async () => {
     try {
-      // setIsUploadingImage(true);
       dispatch(setOverlayLoadingModalState({visible: true}));
       const result = await launchImageLibrary({
         mediaType: 'photo',
@@ -112,7 +113,6 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
         await storage().ref(filename).putFile(uploadUri);
         const downloadURL = await storage().ref(filename).getDownloadURL();
         setImageUrl(downloadURL);
-        // setIsUploadingImage(false);
         dispatch(setOverlayLoadingModalState({visible: false}));
       }
     } catch (err) {
@@ -120,149 +120,172 @@ export const DetailsScreen: FC<DetailsScreenProps> = (
     }
   };
 
+  const renderResetIcon = useCallback(
+    (onPress = () => {}, style: ViewStyle) => {
+      return (
+        <TouchableOpacity style={style} onPress={onPress}>
+          <View
+            width={20}
+            height={20}
+            br100
+            backgroundColor={Colors.red20}
+            center>
+            <Text text90 white>
+              x
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    },
+    [],
+  );
+
+  const onResetImageUrl = () => {
+    setImageUrl('');
+  };
+
+  const onResetDueDate = () => {
+    setDueDate(undefined);
+    setDueTime(undefined);
+  };
+
+  const onResetDueTime = () => {
+    setDueTime(undefined);
+  };
+
   return (
     <Layout useSafeAreaView style={styles.root}>
       <View row spread centerV marginB-16>
-        <Button link label="Cancel" onPress={NavigationService.goBack} />
-        <Text grey10>Details</Text>
-        <Button link label={isEditing ? 'Save' : 'Add'} onPress={onSave} />
+        <Button
+          text80
+          link
+          label="Cancel"
+          color={Colors.blue20}
+          onPress={NavigationService.goBack}
+        />
+        <Text text70 grey10 marginR-8>
+          Details
+        </Text>
+        <Button
+          text80
+          link
+          label={isEditing ? 'Save' : 'Add'}
+          onPress={onSave}
+          color={Colors.blue20}
+          disabled={!title}
+        />
       </View>
       <KeyboardAvoidingScrollView>
-        <View style={styles.mainContentCover} marginB-16>
+        <View style={styles.mainContentCover}>
           <TextField
-            returnKeyType={'next'}
             placeholder="title"
             grey10
             value={title}
             onChangeText={setTitle}
             floatingPlaceholder
           />
-          <View style={styles.gap} />
+          <GapLine marginT-8 />
           <TextField
-            // returnKeyType={'next'}
             placeholder="content"
             grey10
             value={content}
             onChangeText={setContent}
             floatingPlaceholder
             multiline
-            // containerStyle={styles.searchInput}
           />
         </View>
         <View style={styles.dateCover}>
-          <DateTimePicker
-            title={'Applied date'}
-            placeholder={'Applied date'}
-            mode={'date'}
-            onChange={(date: Date) => {
-              setAppliedDate(date);
-            }}
-            value={appliedDate}
-          />
-          <View style={styles.gap} />
-          <DateTimePicker
-            title={'Due date'}
-            placeholder={'Due date'}
-            mode={'date'}
-            onChange={(date: Date) => setDueDate(date)}
-            value={dueDate}
-          />
-          <DateTimePicker
-            title={'Due time'}
-            placeholder={'Due time'}
-            mode={'time'}
-            onChange={(date: Date) => setDueTime(date)}
-            value={dueTime}
-          />
+          {!params?.isToday ? (
+            <DateTimePicker
+              grey10
+              text-90
+              title="Applied date"
+              placeholder="Press to choose"
+              mode="date"
+              onChange={(date: Date) => {
+                setAppliedDate(date);
+              }}
+              value={appliedDate}
+            />
+          ) : null}
+          <View style={styles.relative}>
+            <DateTimePicker
+              title="Due date"
+              placeholder="Press to choose"
+              mode="date"
+              onChange={(date: Date) => setDueDate(date)}
+              value={dueDate}
+            />
+            {dueDate
+              ? renderResetIcon(onResetDueDate, styles.resetIconOfDueDate)
+              : null}
+          </View>
+
+          <View style={styles.relative}>
+            <DateTimePicker
+              title="Due time"
+              placeholder="Press to choose"
+              mode="time"
+              onChange={(date: Date) => setDueTime(date)}
+              value={dueTime}
+            />
+            {dueTime
+              ? renderResetIcon(onResetDueTime, styles.resetIconOfDueDate)
+              : null}
+          </View>
+        </View>
+        <View style={styles.repeatCover}>
+          <Picker
+            title="Repeat"
+            placeholder="Pick a item"
+            useNativePicker
+            enableModalBlur
+            value={repeat}
+            onChange={(value: any) => setRepeat(value)}>
+            {map(repeatOptions, option => (
+              <Picker.Item
+                key={option.value}
+                value={option.value}
+                label={option.label}
+              />
+            ))}
+          </Picker>
+
+          <Picker
+            title="Priority"
+            placeholder="Pick a item"
+            enableModalBlur
+            useNativePicker
+            value={priority}
+            onChange={(value: any) => {
+              setPriority(value);
+            }}>
+            {map(priorityOptions, option => (
+              <Picker.Item
+                key={option.value}
+                value={option.value}
+                label={option.label}
+              />
+            ))}
+          </Picker>
         </View>
 
-        <Picker
-          title="Repeat"
-          placeholder="Pick a item"
-          useNativePicker
-          enableModalBlur
-          // useWheelPicker
-          value={repeat}
-          onChange={(value: any) => setRepeat(value)}
-          // rightIconSource={dropdown}
-          // containerStyle={{marginTop: 20}}
-          // renderPicker={() => {
-          //   return (
-          //     <View>
-          //       <Text>Open Native Picker!</Text>
-          //     </View>
-          //   );
-          // }}
-          // renderNativePicker={props => {
-          //   return (
-          //     <View flex bg-red50>
-          //       <Text>CUSTOM NATIVE PICKER</Text>
-          //     </View>
-          //   );
-          // }}
-          // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
-        >
-          {map(repeatOptions, option => (
-            <Picker.Item
-              key={option.value}
-              value={option.value}
-              label={option.label}
-              // disabled={option.disabled}
-            />
-          ))}
-        </Picker>
-
-        <Picker
-          title="Priority"
-          placeholder="Pick a item"
-          enableModalBlur
-          useNativePicker
-          value={priority}
-          onChange={(value: any) => {
-            setPriority(value);
-          }}
-          // rightIconSource={dropdown}
-          // containerStyle={{marginTop: 20}}
-          // renderPicker={() => {
-          //   return (
-          //     <View>
-          //       <Text>Open Native Picker!</Text>
-          //     </View>
-          //   );
-          // }}
-          // renderNativePicker={props => {
-          //   return (
-          //     <View flex bg-red50>
-          //       <Text>CUSTOM NATIVE PICKER</Text>
-          //     </View>
-          //   );
-          // }}
-          // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
-        >
-          {map(priorityOptions, option => (
-            <Picker.Item
-              key={option.value}
-              value={option.value}
-              label={option.label}
-              // disabled={option.disabled}
-            />
-          ))}
-        </Picker>
         <TouchableOpacity onPress={onLaunchImageLibrary}>
           {!imageUrl ? (
             <View style={styles.imageUploadPlaceholder}>
               <ImageUploadSvg width={48} height={48} />
             </View>
           ) : (
-            <AnimatedImage
-              containerStyle={{
-                backgroundColor: colors.layoutLevel2,
-              }}
-              style={{resizeMode: 'cover', height: 200}}
-              source={{uri: imageUrl}}
-              loader={<ActivityIndicator color={colors.primary} />}
-              animationDuration={300}
-            />
+            <View style={styles.relative}>
+              <AnimatedImage
+                style={styles.animatedImage}
+                containerStyle={styles.animatedImageContainer}
+                source={{uri: imageUrl}}
+                loader={<ActivityIndicator color={Colors.primary} />}
+                animationDuration={300}
+              />
+              {renderResetIcon(onResetImageUrl, styles.resetIconOfImage)}
+            </View>
           )}
         </TouchableOpacity>
       </KeyboardAvoidingScrollView>

@@ -9,6 +9,7 @@ import store, {persistor} from '@init/store';
 import {LoadingView} from '@components/loading-view.component';
 import {LoadingOverlay} from '@components/loading-overlay.component';
 import {AppNavigator} from '@navigation/app.navigator';
+import '@init/theme';
 
 const App = () => {
   return (

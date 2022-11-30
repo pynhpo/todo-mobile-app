@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     backgroundColor: '#ED1C24',
+    paddingLeft: 12,
   },
   hide: {
     backgroundColor: '#464655',

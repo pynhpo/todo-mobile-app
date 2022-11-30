@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {KeyboardAvoidingScrollView} from '@components/keyboard-avoiding-scroll-view.component';
 import {loginAction} from '@redux/auth/actions';
-import {Text, View, TextField, Button} from 'react-native-ui-lib';
+import {Text, View, Incubator, Button} from 'react-native-ui-lib';
 import {TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {styles} from './styles';
@@ -9,6 +9,9 @@ import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {loginSchema} from '@constants/validation-schema.constant';
 import {Layout} from '@components/layout.component';
+import {GapLine} from '@components/gap-line.component';
+
+const {TextField} = Incubator;
 
 type FormValues = {
   email: string;
@@ -31,7 +34,7 @@ export const LoginScreen = (): React.ReactElement => {
   return (
     <Layout useSafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingScrollView>
-        <View flex paddingH-25 paddingT-120>
+        <View flex paddingH-25 paddingT-100>
           <Text blue50 text20 marginB-16>
             Welcome
           </Text>
@@ -39,53 +42,51 @@ export const LoginScreen = (): React.ReactElement => {
             control={control}
             render={({fieldState, field}) => (
               <TextField
+                floatingPlaceholder
                 returnKeyType={'next'}
-                text50
+                grey20
+                text60
                 placeholder="email"
-                grey10
                 value={field.value}
                 onBlur={field.onBlur}
                 onChangeText={field.onChange}
                 onSubmitEditing={() => {
                   passwordInput && passwordInput.current.focus();
                 }}
-                validate={() => fieldState?.error}
+                isValid={!fieldState?.error}
                 validationMessage={fieldState?.error?.message}
                 autoCapitalize="none"
                 enableErrors
               />
             )}
             name="email"
+            defaultValue="username_1@todo.com"
           />
+          <GapLine marginB-20 />
           <Controller
             control={control}
             render={({fieldState, field}) => (
               <TextField
                 autoCapitalize="none"
-                text50
+                grey20
+                text60
                 placeholder="password"
                 ref={passwordInput}
                 secureTextEntry
-                grey10
                 value={field.value}
                 onChangeText={field.onChange}
                 onSubmitEditing={handleSubmit(onSubmit)}
-                validate={() => fieldState?.error}
+                isValid={!fieldState?.error}
                 validationMessage={fieldState?.error?.message}
                 enableErrors
               />
             )}
             name="password"
+            defaultValue="123456"
           />
 
-          <View marginT-100 center>
-            <Button
-              text70
-              white
-              background-orange30
-              label="Login"
-              onPress={handleSubmit(onSubmit)}
-            />
+          <View marginT-68 center>
+            <Button text70 label="Login" onPress={handleSubmit(onSubmit)} />
           </View>
         </View>
       </KeyboardAvoidingScrollView>

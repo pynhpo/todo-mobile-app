@@ -2,7 +2,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import React, {useCallback} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
-import {colors} from '@theme/colors';
+import {Colors} from 'react-native-ui-lib';
 import {Text, View} from 'react-native-ui-lib';
 
 export const MainBottomNavigation = ({
@@ -47,12 +47,12 @@ export const MainBottomNavigation = ({
                   options?.tabBarIcon({
                     focused: isFocused,
                     size: 24,
-                    color: isFocused ? colors.primary : colors.inactiveTab,
+                    color: isFocused ? Colors.primary : Colors.inactiveTab,
                   })}
               </View>
               <Text
                 style={{
-                  color: isFocused ? colors.primary : colors.inactiveTab,
+                  color: isFocused ? Colors.primary : Colors.inactiveTab,
                 }}>
                 {label}
               </Text>
@@ -66,8 +66,8 @@ export const MainBottomNavigation = ({
 
 const styles = StyleSheet.create({
   safeView: {
-    backgroundColor: colors.white,
-    shadowColor: colors.black,
+    backgroundColor: Colors.layoutLevel1,
+    shadowColor: Colors.black,
     shadowOffset: {width: 0, height: 3},
     shadowOpacity: 0.1,
     shadowRadius: 10,

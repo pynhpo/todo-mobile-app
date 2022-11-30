@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, View, ViewProps} from 'react-native';
-import {colors} from '@theme/colors';
+import {Colors} from 'react-native-ui-lib';
 import {
   SafeAreaView,
   SafeAreaViewProps,
@@ -55,9 +55,9 @@ export const Layout = (props: PropsType): React.ReactElement => {
 
 const styles = StyleSheet.create({
   level1: {
-    backgroundColor: colors.layoutLevel1,
+    backgroundColor: Colors.layoutLevel1,
   },
   level2: {
-    backgroundColor: colors.layoutLevel2,
+    backgroundColor: Colors.layoutLevel2,
   },
 });

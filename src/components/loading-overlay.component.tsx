@@ -12,7 +12,7 @@ import {
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import {Text} from 'react-native-ui-lib';
-import {colors} from '@theme/colors';
+import {Colors} from 'react-native-ui-lib';
 
 type SizeType = 'small' | 'large';
 
@@ -31,7 +31,7 @@ export interface LoadingOverlayProps extends PropsWithChildren<ViewProps> {
 
 const defaultProps: LoadingOverlayProps = {
   cancelable: true,
-  color: colors.primary,
+  color: Colors.blue60,
   size: 'small',
   textContent: '',
   textStyle: {},

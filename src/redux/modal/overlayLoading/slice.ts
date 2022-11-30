@@ -12,7 +12,7 @@ const overlayLoadingSlice = createSlice({
       state,
       action: PayloadAction<SetOverlayLoadingModalActionPayload>,
     ) => {
-      state = action.payload;
+      return action.payload;
     },
   },
 });
